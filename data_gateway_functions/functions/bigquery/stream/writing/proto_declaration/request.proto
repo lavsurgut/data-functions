@@ -1,0 +1,8 @@
+syntax = "proto2";
+
+package data_gateway;
+
+message Request {
+  required int64 created_at = 1;
+  required string event = 2;
+}

@@ -1,0 +1,4 @@
+functions-framework==3.3.0
+protobuf==4.22.3
+google-cloud-bigquery-storage==2.19.1
+pendulum==2.1.2
