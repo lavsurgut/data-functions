@@ -1,4 +1,4 @@
-# data-gateway
+# data-gateway-functions
 This is a small project that explores some ideas how one can write and read data from a Data Platform with Serverless Functions.
 At the moment has just a single example of stream writing from an HTTP POST endpoint into the BigQuery.
 
