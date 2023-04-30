@@ -1,4 +1,4 @@
-from data_gateway_functions import __version__
+from data_functions import __version__
 
 
 def test_version():
