@@ -1,10 +1,10 @@
 # data-functions
-This is a project that explores some ideas how one can write and read data from a Data Platform with Serverless Functions.
+The project explores some ideas how one can write and read data from a Data Platform with Serverless Functions.
 At the moment has just a single example of stream writing from an HTTP POST endpoint into the BigQuery.
 
 ## Functions
 ### Write HTTP POST requests data in BigQuery.
-HTTP POST API provides a simple way to write data in BigQuery. New capabilities, like Storage Write API 
+HTTP API provides a simple way to write data in BigQuery. New capabilities, like Storage Write API 
 and GCP Cloud Functions Gen 2 allow to write small to medium amount of data without employing more sophisticated 
 technology stack (e.g. GCP Dataflow/Apache Beam, Pub/Sub(or Kafka)).
 
