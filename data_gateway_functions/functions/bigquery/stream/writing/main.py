@@ -46,4 +46,4 @@ def bq_post(request):
                                   "dataset-id",
                                   "table-name")
     write(client, destination, req)
-    return "Successful sent event"
+    return "Successfully sent an event"

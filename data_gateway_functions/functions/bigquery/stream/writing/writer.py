@@ -40,18 +40,14 @@ def init_stream(
         stream_name: str,
         message_protobuf_descriptor: Descriptor) -> AppendRowsStream:
     request_template = types.AppendRowsRequest()
-    # The initial request must contain the stream name.
     request_template.write_stream = stream_name
-    # So that BigQuery knows how to parse the serialized_rows, generate a
-    # protocol buffer representation of our message descriptor.
     proto_schema = types.ProtoSchema()
-    proto_descriptor = descriptor_pb2.DescriptorProto()  # pylint: disable=no-member
+    proto_descriptor = descriptor_pb2.DescriptorProto()
     message_protobuf_descriptor.CopyToProto(proto_descriptor)
     proto_schema.proto_descriptor = proto_descriptor
     proto_data = types.AppendRowsRequest.ProtoData()
     proto_data.writer_schema = proto_schema
     request_template.proto_rows = proto_data
-    # Create an AppendRowsStream using the request template created above.
     return AppendRowsStream(
         client, request_template
     )
@@ -67,8 +63,6 @@ def write_with_append_stream(
         append_rows_stream: AppendRowsStream,
         pb_rows: Iterable[Any]) -> AppendRowsFuture:
     proto_rows = types.ProtoRows()
-    # Create a batch of row data by appending proto2 serialized bytes to the
-    # serialized_rows repeated field.
     for row in pb_rows:
         proto_rows.serialized_rows.append(row.SerializeToString())
     proto_data = types.AppendRowsRequest.ProtoData()
