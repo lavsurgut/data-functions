@@ -5,7 +5,7 @@ import pendulum
 from google.cloud.bigquery_storage import BigQueryWriteClient
 from werkzeug.exceptions import BadRequest
 
-from proto_declaration.rum_raw_pb2 import Request
+from proto_declaration.request_pb2 import Request
 from writer import write, get_destination
 
 client = BigQueryWriteClient()
