@@ -28,7 +28,6 @@ def bq_post(request):
     """
     if request.method != "POST":
         raise BadRequest("Only POST methods allowed")
-    # this also tries to parse json and raise an error if it didn't work
     event_raw = dict(request.get_json())
     ts = pendulum.now(tz="UTC")
     ts_in_micro = int(ts.float_timestamp * 1000 * 1000)

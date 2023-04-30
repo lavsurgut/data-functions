@@ -1,20 +1,20 @@
-# data-gateway-functions
-This is a small project that explores some ideas how one can write and read data from a Data Platform with Serverless Functions.
+# data-functions
+This is a project that explores some ideas how one can write and read data from a Data Platform with Serverless Functions.
 At the moment has just a single example of stream writing from an HTTP POST endpoint into the BigQuery.
 
 ## Functions
 ### Write HTTP POST requests data in BigQuery.
-HTTP POST API provides a simple way to write data in BigQuery. New capabilities, like Storage Write API and GCP Cloud Functions Gen 2
-allow to write small to medium amount of data without employing more sophisticated technology stack 
-(e.g. GCP Dataflow/Apache Beam, Pub/Sub(or Kafka)).
+HTTP POST API provides a simple way to write data in BigQuery. New capabilities, like Storage Write API 
+and GCP Cloud Functions Gen 2 allow to write small to medium amount of data without employing more sophisticated 
+technology stack (e.g. GCP Dataflow/Apache Beam, Pub/Sub(or Kafka)).
 
 #### Run locally for development
-1. GCP credentials should be set in usual way via application-default credentials for your user account
+1. GCP credentials should be set in usual way via `application-default` credentials for your user account
    
    1.1 See https://cloud.google.com/docs/authentication/application-default-credentials#personal for details
-2. Run below command to set up Flask service in the Debug mode with live code-reloading:
+2. Run below command to set up a Flask service in the Debug mode with live code-reloading:
 ```
-cd data_gateway/functions/bigquery/stream/writing && \
+cd data_functions/functions/bigquery/stream/writing && \
 functions-framework --target bq_post --debug
 ```
 

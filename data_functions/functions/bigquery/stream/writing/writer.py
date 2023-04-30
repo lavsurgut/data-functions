@@ -1,3 +1,4 @@
+import threading
 from contextlib import contextmanager
 from typing import Any, Iterable
 
@@ -9,30 +10,14 @@ from google.protobuf.descriptor import Descriptor
 from google.protobuf.message import Message
 
 stream_dict = dict()
+lock = threading.Lock()
 
 
 def write(client: BigQueryWriteClient,
           destination: str,
           request: Message) -> AppendRowsFuture:
-    with stream_context(client, request.DESCRIPTOR, destination) as stream:
-        return write_with_append_stream(stream, [request])
-
-
-@contextmanager
-def stream_context(client, descriptor, stream_name) -> AppendRowsStream:
-    stream = stream_dict.get(stream_name)
-    try:
-        if stream is None:
-            stream = init_stream(client,
-                                 stream_name,
-                                 descriptor
-                                 )
-            stream_dict[stream_name] = stream
-        yield stream
-    except:
-        if stream is not None:
-            stream.close()
-        stream_dict[stream_name] = None
+    with __stream_context(client, request.DESCRIPTOR, destination) as stream:
+        return __write_with_append_stream(stream, [request])
 
 
 def init_stream(
@@ -59,7 +44,26 @@ def get_destination(project_id: str,
     return f"projects/{project_id}/datasets/{dataset_id}/tables/{table_id}/streams/_default"
 
 
-def write_with_append_stream(
+@contextmanager
+def __stream_context(client, descriptor, stream_name) -> AppendRowsStream:
+    global stream_dict
+    stream = stream_dict.get(stream_name)
+    with lock:
+        try:
+            if stream is None:
+                stream = init_stream(client,
+                                     stream_name,
+                                     descriptor
+                                     )
+                stream_dict[stream_name] = stream
+            yield stream
+        except:
+            if stream is not None:
+                stream.close()
+            stream_dict[stream_name] = None
+
+
+def __write_with_append_stream(
         append_rows_stream: AppendRowsStream,
         pb_rows: Iterable[Any]) -> AppendRowsFuture:
     proto_rows = types.ProtoRows()
